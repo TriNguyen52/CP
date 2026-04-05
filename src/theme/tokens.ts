@@ -6,7 +6,7 @@ export const colors = {
   card: "rgba(255,255,255,0.08)",
   cardStrong: "rgba(255,255,255,0.16)",
   border: "rgba(255,255,255,0.18)",
-  divider: "rgba(255,255,255,0.1)",
+  divider: "rgba(255,255,255,0.3)",
   success: "rgba(119, 255, 157, 0.9)",
   warning: "rgba(255, 216, 119, 0.9)",
 };

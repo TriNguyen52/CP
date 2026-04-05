@@ -16,7 +16,8 @@
     "types": [
       "react",
       "react-native",
-      "expo"
+      "expo",
+      "jest"
     ]
   },
   "exclude": [

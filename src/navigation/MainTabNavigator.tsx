@@ -2,9 +2,9 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { BottomTabBar } from "../components/common/BottomTabBar";
-import { DashboardScreen } from "../screens/main/DashboardScreen";
-import { EditProfileScreen } from "../screens/main/EditProfileScreen";
-import { HomeScreen } from "../screens/main/HomeScreen";
+import { HomeStackNavigator } from "./HomeStackNavigator";
+import { ProfileStackNavigator } from "./ProfileStackNavigator";
+import { TransactionsStackNavigator } from "./TransactionsStackNavigator";
 import { MainTabParamList } from "../types/navigation";
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
@@ -15,17 +15,11 @@ export function MainTabNavigator() {
       screenOptions={{
         headerShown: false,
       }}
-      tabBar={(props) => (
-        <BottomTabBar
-          {...props}
-          showCenterButton
-          onCenterPress={() => props.navigation.navigate("Profile")}
-        />
-      )}
+      tabBar={(props) => <BottomTabBar {...props} />}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Transactions" component={DashboardScreen} />
-      <Tab.Screen name="Profile" component={EditProfileScreen} />
+      <Tab.Screen name="Home" component={HomeStackNavigator} />
+      <Tab.Screen name="Transactions" component={TransactionsStackNavigator} />
+      <Tab.Screen name="Profile" component={ProfileStackNavigator} />
     </Tab.Navigator>
   );
 }

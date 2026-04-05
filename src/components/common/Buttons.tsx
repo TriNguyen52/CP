@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   primary: {
     backgroundColor: "#FFFFFF",
     borderRadius: radius.pill,
-    minHeight: 54,
+    minHeight: 50,
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: spacing.lg,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.pill,
     borderWidth: 1,
     borderColor: colors.border,
-    minHeight: 54,
+    minHeight: 44,
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: spacing.lg,

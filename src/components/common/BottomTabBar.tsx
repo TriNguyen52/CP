@@ -95,7 +95,6 @@ export function BottomTabBar({
           <FloatingActionButton label="Edit\nProfile" onPress={onCenterPress} />
         </View>
       ) : null}
-      <View style={styles.gestureIndicator} />
     </View>
   );
 }

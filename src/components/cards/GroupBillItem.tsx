@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingVertical: spacing.md,
     borderBottomColor: colors.divider,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
     gap: spacing.sm,
   },
   leftRow: {

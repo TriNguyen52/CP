@@ -5,18 +5,23 @@ export type AuthStackParamList = {
   Onboarding: undefined;
 };
 
-export type MainTabParamList = {
-  Home: undefined;
-  Transactions: undefined;
-  Profile: undefined;
+export type HomeStackParamList = {
+  HomeScreen: undefined;
+  GroupDetailsScreen: { groupId: string };
+  AddExpenseScreen: { groupId: string; prefillExpenseId?: string };
+  CreateGroupScreen: undefined;
 };
 
-export type RootStackParamList = {
-  Auth: NavigatorScreenParams<AuthStackParamList>;
-  Main: NavigatorScreenParams<MainTabParamList>;
-  AddBill: undefined;
-  AddPayment: undefined;
-  GroupBills: undefined;
-  OcrPermission: undefined;
-  Recommendation: undefined;
+export type TransactionsStackParamList = {
+  DashboardScreen: undefined;
+};
+
+export type ProfileStackParamList = {
+  EditProfileScreen: undefined;
+};
+
+export type MainTabParamList = {
+  Home: NavigatorScreenParams<HomeStackParamList>;
+  Transactions: NavigatorScreenParams<TransactionsStackParamList>;
+  Profile: NavigatorScreenParams<ProfileStackParamList>;
 };

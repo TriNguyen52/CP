@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.divider,
     borderBottomWidth: 0.5,
     gap: spacing.sm,
+    zIndex: 10,
   },
   leftRow: {
     flexDirection: "row",

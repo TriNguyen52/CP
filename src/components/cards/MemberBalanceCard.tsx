@@ -36,10 +36,11 @@ const styles = StyleSheet.create({
     minHeight: 138,
     borderRadius: radius.lg,
     padding: spacing.md,
-    backgroundColor: colors.card,
+    backgroundColor: "rgba(31, 31, 31, 0.95)",
     borderWidth: 1,
     borderColor: colors.border,
     gap: spacing.md,
+    zIndex: 10,
   },
   topRow: {
     flexDirection: "row",

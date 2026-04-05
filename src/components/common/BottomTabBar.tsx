@@ -105,6 +105,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.md,
     paddingBottom: spacing.md,
     backgroundColor: colors.background,
+    zIndex: 100,
+    elevation: 12,
   },
   container: {
     flexDirection: "row",
@@ -116,6 +118,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.pill,
     minHeight: 66,
     paddingHorizontal: spacing.md,
+    zIndex: 100,
   },
   tabButton: {
     flex: 1,
@@ -137,6 +140,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignSelf: "center",
     bottom: 26,
+    zIndex: 101,
   },
   gestureIndicator: {
     alignSelf: "center",

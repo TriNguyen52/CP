@@ -3,7 +3,9 @@ import {
   FlatList,
   Pressable,
   RefreshControl,
+  SafeAreaView,
   StyleSheet,
+  StatusBar,
   Text,
   View,
 } from "react-native";
@@ -12,7 +14,6 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 
 import { GroupBillItem } from "../../components/cards/GroupBillItem";
-import { AppStatusBar } from "../../components/common/AppStatusBar";
 import { NavigationHeader } from "../../components/common/NavigationHeader";
 import { EmptyState, ErrorState, SkeletonList } from "../../components/common/StateViews";
 import { useAppData } from "../../state/AppDataContext";
@@ -25,7 +26,6 @@ export function HomeScreen() {
 
   const contentHeader = (
     <View>
-      <AppStatusBar />
       <NavigationHeader title="Transaction Minimizer" />
 
       <View style={styles.sectionHeader}>
@@ -35,65 +35,75 @@ export function HomeScreen() {
   );
 
   return (
-    <View style={styles.container}>
-      {loadingGroups ? (
-        <View style={styles.contentWrap}>
-          {contentHeader}
-          <SkeletonList count={4} cardHeight={92} />
-        </View>
-      ) : null}
+    <SafeAreaView style={styles.safeArea}>
+      <StatusBar barStyle="light-content" backgroundColor="#000000" />
+      <View style={styles.container}>
+        {loadingGroups ? (
+          <View style={styles.contentWrap}>
+            {contentHeader}
+            <SkeletonList count={4} cardHeight={92} />
+          </View>
+        ) : null}
 
-      {!loadingGroups && groupsError ? (
-        <View style={styles.contentWrap}>
-          {contentHeader}
-          <ErrorState
-            title="Network error"
-            message="We could not load your groups. Check your connection and try again."
-            onRetry={refreshGroups}
+        {!loadingGroups && groupsError ? (
+          <View style={styles.contentWrap}>
+            {contentHeader}
+            <ErrorState
+              title="Network error"
+              message="We could not load your groups. Check your connection and try again."
+              onRetry={refreshGroups}
+            />
+          </View>
+        ) : null}
+
+        {!loadingGroups && !groupsError ? (
+          <FlatList
+            data={groups}
+            keyExtractor={(item) => item.id}
+            style={styles.list}
+            contentContainerStyle={styles.listContent}
+            refreshControl={<RefreshControl refreshing={false} onRefresh={refreshGroups} />}
+            ListHeaderComponent={contentHeader}
+            ListFooterComponent={<View style={styles.listFooter} />}
+            renderItem={({ item }) => (
+              <GroupBillItem
+                item={item}
+                onPress={() => navigation.navigate("GroupDetailsScreen", { groupId: item.id })}
+              />
+            )}
+            ListEmptyComponent={
+              <EmptyState
+                icon="people-outline"
+                title="No Groups Yet"
+                description="Create your first group to start splitting expenses with friends."
+                actionLabel="Create Group"
+                onActionPress={() => navigation.navigate("CreateGroupScreen")}
+              />
+            }
           />
-        </View>
-      ) : null}
+        ) : null}
 
-      {!loadingGroups && !groupsError ? (
-        <FlatList
-          data={groups}
-          keyExtractor={(item) => item.id}
-          style={styles.list}
-          contentContainerStyle={styles.listContent}
-          refreshControl={<RefreshControl refreshing={false} onRefresh={refreshGroups} />}
-          ListHeaderComponent={contentHeader}
-          renderItem={({ item }) => (
-            <GroupBillItem
-              item={item}
-              onPress={() => navigation.navigate("GroupDetailsScreen", { groupId: item.id })}
-            />
-          )}
-          ListEmptyComponent={
-            <EmptyState
-              icon="people-outline"
-              title="No Groups Yet"
-              description="Create your first group to start splitting expenses with friends."
-              actionLabel="Create Group"
-              onActionPress={() => navigation.navigate("CreateGroupScreen")}
-            />
-          }
-        />
-      ) : null}
-
-      <Pressable
-        style={styles.fab}
-        onPress={() => navigation.navigate("CreateGroupScreen")}
-      >
-        <Ionicons name="add" size={28} color="#000000" />
-      </Pressable>
-    </View>
+        <Pressable
+          style={styles.fab}
+          onPress={() => navigation.navigate("CreateGroupScreen")}
+        >
+          <Ionicons name="add" size={28} color="#000000" />
+        </Pressable>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: colors.background,
+    zIndex: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: colors.background,
+    zIndex: 1,
   },
   contentWrap: {
     paddingHorizontal: spacing.md,
@@ -109,6 +119,9 @@ const styles = StyleSheet.create({
     paddingTop: spacing.sm,
     paddingBottom: 132,
   },
+  listFooter: {
+    height: 16,
+  },
   sectionHeader: {
     marginTop: spacing.xs,
     marginBottom: spacing.sm,
@@ -123,14 +136,15 @@ const styles = StyleSheet.create({
   },
   fab: {
     position: "absolute",
-    right: spacing.md,
-    bottom: 80,
+    right: 24,
+    bottom: 24,
     width: 56,
     height: 56,
     borderRadius: radius.full,
     backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
+    zIndex: 50,
     elevation: 8,
     shadowColor: "#000000",
     shadowOffset: { width: 0, height: 4 },

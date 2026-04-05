@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useLayoutEffect, useMemo, useState } from "react";
 import {
   Alert,
   Pressable,
@@ -46,6 +46,24 @@ export function GroupDetailsScreen({ navigation, route }: Props) {
     useState<SuggestedTransaction | null>(null);
   const [selectedMethod, setSelectedMethod] = useState<SettlementMethod>("Cash");
   const [savingSettlement, setSavingSettlement] = useState(false);
+
+  useLayoutEffect(() => {
+    if (!group) {
+      return;
+    }
+
+    navigation.setOptions({
+      title: group.name,
+      headerRight: () => (
+        <Pressable
+          style={styles.headerAddButton}
+          onPress={() => navigation.navigate("AddExpenseScreen", { groupId: group.id })}
+        >
+          <Ionicons name="add" size={22} color="#000000" />
+        </Pressable>
+      ),
+    });
+  }, [group, navigation]);
 
   if (!group) {
     return (
@@ -311,13 +329,6 @@ export function GroupDetailsScreen({ navigation, route }: Props) {
         ) : null}
       </ScrollView>
 
-      <Pressable
-        style={styles.fab}
-        onPress={() => navigation.navigate("AddExpenseScreen", { groupId: group.id })}
-      >
-        <Ionicons name="add" size={26} color="#000000" />
-      </Pressable>
-
       {selectedTransaction ? (
         <View style={styles.modalBackdrop}>
           <View style={styles.modalCard}>
@@ -379,6 +390,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
+    zIndex: 1,
   },
   scroll: {
     flex: 1,
@@ -387,6 +399,7 @@ const styles = StyleSheet.create({
     padding: spacing.md,
     gap: spacing.md,
     paddingBottom: 144,
+    marginBottom: 16,
   },
   summaryCard: {
     borderRadius: radius.lg,
@@ -395,6 +408,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.cardStrong,
     padding: spacing.md,
     gap: spacing.sm,
+    zIndex: 10,
   },
   summaryLabel: {
     color: colors.textSecondary,
@@ -410,6 +424,20 @@ const styles = StyleSheet.create({
   },
   warning: {
     color: colors.warning,
+  },
+  headerAddButton: {
+    width: 40,
+    height: 40,
+    borderRadius: radius.full,
+    marginRight: 2,
+    backgroundColor: "#FFFFFF",
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 4,
   },
   summaryDetailsRow: {
     marginTop: spacing.xs,
@@ -494,6 +522,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.card,
     padding: spacing.md,
     gap: 4,
+    zIndex: 10,
   },
   expenseCardTop: {
     flexDirection: "row",
@@ -534,9 +563,10 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     borderWidth: 1,
     borderColor: colors.border,
-    backgroundColor: colors.card,
+    backgroundColor: "rgba(31, 31, 31, 0.95)",
     padding: spacing.md,
     gap: spacing.xs,
+    zIndex: 10,
   },
   settlementText: {
     color: colors.textPrimary,
@@ -571,6 +601,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.card,
     padding: spacing.md,
     gap: spacing.xs,
+    zIndex: 10,
   },
   historyTitle: {
     color: colors.textPrimary,
@@ -610,6 +641,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     alignItems: "center",
     justifyContent: "center",
+    zIndex: 50,
     elevation: 8,
     shadowColor: "#000000",
     shadowOffset: { width: 0, height: 4 },
@@ -653,6 +685,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: spacing.md,
+    zIndex: 200,
   },
   modalCard: {
     width: "100%",
@@ -662,6 +695,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.cardStrong,
     padding: spacing.md,
     gap: spacing.sm,
+    zIndex: 201,
   },
   modalTitle: {
     color: colors.textPrimary,

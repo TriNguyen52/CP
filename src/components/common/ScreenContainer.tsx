@@ -26,13 +26,17 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: colors.background,
+    zIndex: 1,
   },
   scroll: {
     flex: 1,
+    zIndex: 1,
   },
   content: {
     paddingHorizontal: spacing.md,
-    paddingBottom: spacing.xl,
+    paddingBottom: 100,
+    marginBottom: 16,
     backgroundColor: colors.background,
+    zIndex: 1,
   },
 });

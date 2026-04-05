@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.border,
     gap: spacing.sm,
+    zIndex: 10,
   },
   title: {
     color: colors.textSecondary,

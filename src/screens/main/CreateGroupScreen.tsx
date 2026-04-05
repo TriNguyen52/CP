@@ -210,6 +210,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
+    zIndex: 1,
   },
   scroll: {
     flex: 1,
@@ -217,6 +218,7 @@ const styles = StyleSheet.create({
   content: {
     padding: spacing.md,
     paddingBottom: 120,
+    marginBottom: 16,
     gap: spacing.md,
   },
   imageWrap: {
@@ -250,6 +252,7 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     padding: spacing.md,
     gap: spacing.sm,
+    zIndex: 10,
   },
   label: {
     color: colors.textSecondary,

@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { NavigationProp, ParamListBase, useNavigation } from "@react-navigation/native";
 
 import { AppStatusBar } from "../../components/common/AppStatusBar";
 import { FeatureCard } from "../../components/cards/FeatureCard";
@@ -31,23 +32,46 @@ const options = [
 ] as const;
 
 export function AddBillScreen() {
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
+
   return (
     <ScreenContainer contentStyle={styles.content}>
       <AppStatusBar />
-      <NavigationHeader title="Create a New Bill Group" />
-      <Text style={styles.subtitle}>Join an Existing Bill Group</Text>
-      <Text style={styles.sectionTitle}>Bill Group Options</Text>
+      <View style={styles.modalBackdrop}>
+        <NavigationHeader title="Create a New Bill Group" />
+        <View style={styles.modalContent}>
+          <Text style={styles.subtitle}>Join an Existing Bill Group</Text>
+          <Text style={styles.sectionTitle}>Bill Group Options</Text>
 
-      <View style={styles.grid}>
-        {options.map((option) => (
-          <View key={option.title} style={styles.gridCell}>
-            <FeatureCard
-              title={option.title}
-              description={option.description}
-              icon={option.icon}
-            />
+          <View style={styles.grid}>
+            {options.map((option) => (
+              <View key={option.title} style={styles.gridCell}>
+                <FeatureCard
+                  title={option.title}
+                  description={option.description}
+                  icon={option.icon}
+                />
+              </View>
+            ))}
           </View>
-        ))}
+
+          <View style={styles.actionsRow}>
+            <Pressable
+              style={[styles.actionButton, styles.cancelButton]}
+              onPress={() => {
+                if (navigation.canGoBack()) {
+                  navigation.goBack();
+                }
+              }}
+            >
+              <Text style={styles.cancelButtonText}>Cancel</Text>
+            </Pressable>
+
+            <Pressable style={[styles.actionButton, styles.saveButton]}>
+              <Text style={styles.saveButtonText}>Save</Text>
+            </Pressable>
+          </View>
+        </View>
       </View>
     </ScreenContainer>
   );
@@ -56,7 +80,19 @@ export function AddBillScreen() {
 const styles = StyleSheet.create({
   content: {
     paddingTop: spacing.sm,
-    paddingBottom: spacing.xl,
+    paddingBottom: 100,
+  },
+  modalBackdrop: {
+    zIndex: 200,
+  },
+  modalContent: {
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.card,
+    padding: spacing.md,
+    zIndex: 201,
+    marginBottom: 16,
   },
   subtitle: {
     color: colors.textSecondary,
@@ -79,5 +115,40 @@ const styles = StyleSheet.create({
     width: "50%",
     paddingHorizontal: 6,
     marginBottom: spacing.sm,
+  },
+  actionsRow: {
+    marginTop: spacing.xs,
+    flexDirection: "row",
+    gap: spacing.sm,
+  },
+  actionButton: {
+    flex: 1,
+    minHeight: 50,
+    borderRadius: 24,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  cancelButton: {
+    backgroundColor: "#2D2D2D",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.2)",
+  },
+  saveButton: {
+    backgroundColor: "#FFFFFF",
+  },
+  cancelButtonText: {
+    color: "#FFFFFF",
+    fontFamily: typography.semiBold,
+    fontSize: 15,
+  },
+  saveButtonText: {
+    color: "#000000",
+    fontFamily: typography.semiBold,
+    fontSize: 15,
   },
 });

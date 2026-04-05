@@ -485,6 +485,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
+    zIndex: 1,
   },
   scroll: {
     flex: 1,
@@ -493,6 +494,7 @@ const styles = StyleSheet.create({
     padding: spacing.md,
     gap: spacing.md,
     paddingBottom: 120,
+    marginBottom: 16,
   },
   entryOptionsWrap: {
     flexDirection: "row",
@@ -506,6 +508,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.card,
     padding: spacing.md,
     gap: spacing.xs,
+    zIndex: 10,
   },
   entryTitle: {
     color: colors.textPrimary,
@@ -530,6 +533,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.card,
     padding: spacing.md,
     gap: spacing.sm,
+    zIndex: 10,
   },
   label: {
     color: colors.textSecondary,

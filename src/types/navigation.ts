@@ -18,6 +18,9 @@ export type TransactionsStackParamList = {
 
 export type ProfileStackParamList = {
   EditProfileScreen: undefined;
+  PaymentMethodsScreen: undefined;
+  PreferencesScreen: undefined;
+  AppInfoScreen: undefined;
 };
 
 export type MainTabParamList = {

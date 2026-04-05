@@ -2,9 +2,12 @@ import React, { useMemo, useState } from "react";
 import { Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import Svg, { Circle } from "react-native-svg";
+import { NavigationProp, ParamListBase, useNavigation } from "@react-navigation/native";
 
+import { NotificationBellButton } from "../../components/common/NotificationBellButton";
 import { NavigationHeader } from "../../components/common/NavigationHeader";
 import { ScreenContainer } from "../../components/common/ScreenContainer";
+import { appNotifications } from "../../data/mockData";
 import { useAppData } from "../../state/AppDataContext";
 import { colors, radius, spacing, typography } from "../../theme/tokens";
 
@@ -139,9 +142,11 @@ const mapToDashboardCategory = (category?: string, description?: string): Dashbo
 };
 
 export function DashboardScreen() {
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const { groups } = useAppData();
   const { width } = useWindowDimensions();
   const [selectedFilter, setSelectedFilter] = useState<TimeFilter>("week");
+  const hasUnreadNotifications = appNotifications.some((item) => item.unread);
 
   const categoryAnalytics = useMemo(() => {
     const totals: Record<DashboardCategoryKey, number> = {
@@ -216,7 +221,15 @@ export function DashboardScreen() {
 
   return (
     <ScreenContainer contentStyle={styles.content}>
-      <NavigationHeader title="Spending Analytics" />
+      <NavigationHeader
+        title="Spending Analytics"
+        rightAction={
+          <NotificationBellButton
+            hasUnread={hasUnreadNotifications}
+            onPress={() => navigation.navigate("NotificationsScreen")}
+          />
+        }
+      />
 
       <Text style={styles.subtitle}>Spending Categories</Text>
 

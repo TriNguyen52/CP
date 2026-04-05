@@ -1,22 +1,34 @@
 import React, { useState } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
+import { NavigationProp, ParamListBase, useNavigation } from "@react-navigation/native";
 
 import { AppStatusBar } from "../../components/common/AppStatusBar";
 import { LineChartLarge } from "../../components/charts/LineChartLarge";
 import { NavigationHeader } from "../../components/common/NavigationHeader";
+import { NotificationBellButton } from "../../components/common/NotificationBellButton";
 import { ScreenContainer } from "../../components/common/ScreenContainer";
-import { recommendations } from "../../data/mockData";
+import { appNotifications, recommendations } from "../../data/mockData";
 import { colors, radius, spacing, typography } from "../../theme/tokens";
 
 const tabs = ["1M", "3M", "1Y"];
 
 export function RecommendationScreen() {
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const [activeTab, setActiveTab] = useState("3M");
+  const hasUnreadNotifications = appNotifications.some((item) => item.unread);
 
   return (
     <ScreenContainer contentStyle={styles.content}>
       <AppStatusBar />
-      <NavigationHeader title="Recommendations" />
+      <NavigationHeader
+        title="Recommendations"
+        rightAction={
+          <NotificationBellButton
+            hasUnread={hasUnreadNotifications}
+            onPress={() => navigation.navigate("NotificationsScreen")}
+          />
+        }
+      />
 
       <View style={styles.tabWrap}>
         {tabs.map((tab) => (

@@ -5,6 +5,7 @@ import { AddExpenseScreen } from "../screens/main/AddExpenseScreen";
 import { CreateGroupScreen } from "../screens/main/CreateGroupScreen";
 import { GroupDetailsScreen } from "../screens/main/GroupDetailsScreen";
 import { HomeScreen } from "../screens/main/HomeScreen";
+import { NotificationsScreen } from "../screens/main/NotificationsScreen";
 import { colors, typography } from "../theme/tokens";
 import { HomeStackParamList } from "../types/navigation";
 
@@ -53,6 +54,14 @@ export function HomeStackNavigator() {
         options={{
           title: "Add Expense",
           presentation: "modal",
+        }}
+      />
+      <Stack.Screen
+        name="NotificationsScreen"
+        component={NotificationsScreen}
+        options={{
+          title: "Notifications",
+          headerShown: true,
         }}
       />
     </Stack.Navigator>

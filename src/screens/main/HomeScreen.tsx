@@ -10,23 +10,35 @@ import {
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { NavigationProp, ParamListBase, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 
 import { GroupBillItem } from "../../components/cards/GroupBillItem";
+import { NotificationBellButton } from "../../components/common/NotificationBellButton";
 import { NavigationHeader } from "../../components/common/NavigationHeader";
 import { EmptyState, ErrorState, SkeletonList } from "../../components/common/StateViews";
+import { appNotifications } from "../../data/mockData";
 import { useAppData } from "../../state/AppDataContext";
 import { colors, radius, spacing, typography } from "../../theme/tokens";
 import { HomeStackParamList } from "../../types/navigation";
 
 export function HomeScreen() {
   const navigation = useNavigation<StackNavigationProp<HomeStackParamList>>();
+  const anyNavigation = useNavigation<NavigationProp<ParamListBase>>();
   const { groups, loadingGroups, groupsError, refreshGroups } = useAppData();
+  const hasUnreadNotifications = appNotifications.some((item) => item.unread);
 
   const contentHeader = (
     <View>
-      <NavigationHeader title="Transaction Minimizer" />
+      <NavigationHeader
+        title="Transaction Minimizer"
+        rightAction={
+          <NotificationBellButton
+            hasUnread={hasUnreadNotifications}
+            onPress={() => anyNavigation.navigate("NotificationsScreen")}
+          />
+        }
+      />
 
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>Group Bills</Text>

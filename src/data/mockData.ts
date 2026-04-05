@@ -1,5 +1,14 @@
 import { BillGroup, MemberBalance, Recommendation, Transaction, User } from "../types/models";
 
+type AppNotification = {
+  id: string;
+  kind: "expense" | "payment" | "settlement";
+  text: string;
+  timestamp: string;
+  createdAt: string;
+  unread: boolean;
+};
+
 export const users: User[] = [
   {
     id: "1",
@@ -126,5 +135,40 @@ export const recommendations: Recommendation[] = [
     amount: 1000,
     percentage: 80,
     icon: "bar-chart",
+  },
+];
+
+export const appNotifications: AppNotification[] = [
+  {
+    id: "n-1",
+    kind: "expense",
+    text: "John added $45.20 to Weekend Trip",
+    timestamp: "2m ago",
+    createdAt: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
+    unread: true,
+  },
+  {
+    id: "n-2",
+    kind: "payment",
+    text: "Sarah paid you $30.00",
+    timestamp: "1h ago",
+    createdAt: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
+    unread: true,
+  },
+  {
+    id: "n-3",
+    kind: "settlement",
+    text: "Settlement due in Apartment Crew",
+    timestamp: "3h ago",
+    createdAt: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
+    unread: true,
+  },
+  {
+    id: "n-4",
+    kind: "expense",
+    text: "Riley added $18.75 to Team Lunch",
+    timestamp: "Yesterday",
+    createdAt: new Date(Date.now() - 28 * 60 * 60 * 1000).toISOString(),
+    unread: false,
   },
 ];

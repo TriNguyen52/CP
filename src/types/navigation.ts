@@ -10,10 +10,12 @@ export type HomeStackParamList = {
   GroupDetailsScreen: { groupId: string };
   AddExpenseScreen: { groupId: string; prefillExpenseId?: string };
   CreateGroupScreen: undefined;
+  NotificationsScreen: undefined;
 };
 
 export type TransactionsStackParamList = {
   DashboardScreen: undefined;
+  NotificationsScreen: undefined;
 };
 
 export type ProfileStackParamList = {

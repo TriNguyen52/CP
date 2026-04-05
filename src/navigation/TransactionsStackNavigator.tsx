@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import { DashboardScreen } from "../screens/main/DashboardScreen";
+import { NotificationsScreen } from "../screens/main/NotificationsScreen";
 import { colors, typography } from "../theme/tokens";
 import { TransactionsStackParamList } from "../types/navigation";
 
@@ -28,6 +29,14 @@ export function TransactionsStackNavigator() {
         options={{
           title: "Spending Analytics",
           headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="NotificationsScreen"
+        component={NotificationsScreen}
+        options={{
+          title: "Notifications",
+          headerShown: true,
         }}
       />
     </Stack.Navigator>

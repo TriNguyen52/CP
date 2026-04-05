@@ -1,11 +1,19 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { NavigationProp, ParamListBase, useNavigation } from "@react-navigation/native";
 
 import { AppStatusBar } from "../../components/common/AppStatusBar";
 import { FeatureCard } from "../../components/cards/FeatureCard";
 import { NavigationHeader } from "../../components/common/NavigationHeader";
-import { ScreenContainer } from "../../components/common/ScreenContainer";
 import { colors, spacing, typography } from "../../theme/tokens";
 
 const options = [
@@ -35,51 +43,78 @@ export function AddBillScreen() {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
 
   return (
-    <ScreenContainer contentStyle={styles.content}>
-      <AppStatusBar />
-      <View style={styles.modalBackdrop}>
-        <NavigationHeader title="Create a New Bill Group" />
-        <View style={styles.modalContent}>
-          <Text style={styles.subtitle}>Join an Existing Bill Group</Text>
-          <Text style={styles.sectionTitle}>Bill Group Options</Text>
+    <KeyboardAvoidingView
+      style={styles.root}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={8}
+    >
+      <SafeAreaView style={styles.safeArea}>
+        <AppStatusBar />
+        <ScrollView
+          style={styles.scroll}
+          contentContainerStyle={styles.content}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.modalBackdrop}>
+            <NavigationHeader title="Create a New Bill Group" />
+            <View style={styles.modalContent}>
+              <Text style={styles.subtitle}>Join an Existing Bill Group</Text>
+              <Text style={styles.sectionTitle}>Bill Group Options</Text>
 
-          <View style={styles.grid}>
-            {options.map((option) => (
-              <View key={option.title} style={styles.gridCell}>
-                <FeatureCard
-                  title={option.title}
-                  description={option.description}
-                  icon={option.icon}
-                />
+              <View style={styles.grid}>
+                {options.map((option) => (
+                  <View key={option.title} style={styles.gridCell}>
+                    <FeatureCard
+                      title={option.title}
+                      description={option.description}
+                      icon={option.icon}
+                    />
+                  </View>
+                ))}
               </View>
-            ))}
+            </View>
           </View>
+        </ScrollView>
+      </SafeAreaView>
 
-          <View style={styles.actionsRow}>
-            <Pressable
-              style={[styles.actionButton, styles.cancelButton]}
-              onPress={() => {
-                if (navigation.canGoBack()) {
-                  navigation.goBack();
-                }
-              }}
-            >
-              <Text style={styles.cancelButtonText}>Cancel</Text>
-            </Pressable>
+      <View style={styles.fixedActionsWrap}>
+        <View style={styles.actionsRow}>
+          <Pressable
+            style={[styles.actionButton, styles.cancelButton]}
+            onPress={() => {
+              if (navigation.canGoBack()) {
+                navigation.goBack();
+              }
+            }}
+          >
+            <Text style={styles.cancelButtonText}>Cancel</Text>
+          </Pressable>
 
-            <Pressable style={[styles.actionButton, styles.saveButton]}>
-              <Text style={styles.saveButtonText}>Save</Text>
-            </Pressable>
-          </View>
+          <Pressable style={[styles.actionButton, styles.saveButton]}>
+            <Text style={styles.saveButtonText}>Save</Text>
+          </Pressable>
         </View>
       </View>
-    </ScreenContainer>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    backgroundColor: "#000000",
+  },
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#000000",
+  },
+  scroll: {
+    flex: 1,
+    backgroundColor: "#000000",
+  },
   content: {
     paddingTop: spacing.sm,
+    paddingHorizontal: spacing.md,
     paddingBottom: 100,
   },
   modalBackdrop: {
@@ -116,10 +151,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     marginBottom: spacing.sm,
   },
+  fixedActionsWrap: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "#000000",
+    padding: 16,
+    borderTopWidth: 1,
+    borderTopColor: "rgba(255, 255, 255, 0.1)",
+  },
   actionsRow: {
-    marginTop: spacing.xs,
     flexDirection: "row",
-    gap: spacing.sm,
+    gap: 12,
   },
   actionButton: {
     flex: 1,

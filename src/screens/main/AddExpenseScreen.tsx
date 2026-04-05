@@ -369,9 +369,7 @@ export function AddExpenseScreen({ navigation, route }: Props) {
             })}
           </View>
         </View>
-      </ScrollView>
-
-      <View style={styles.footer}>
+        <View style={styles.footer}>
         <Pressable style={styles.cancelButton} onPress={() => navigation.goBack()}>
           <Text style={styles.cancelButtonText}>Cancel</Text>
         </Pressable>
@@ -381,6 +379,7 @@ export function AddExpenseScreen({ navigation, route }: Props) {
           </Text>
         </Pressable>
       </View>
+      </ScrollView>
 
       <ReceiptScannerModal
         visible={scanModalVisible}

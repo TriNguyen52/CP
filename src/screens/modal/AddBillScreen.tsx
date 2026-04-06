@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -10,10 +11,12 @@ import {
   View,
 } from "react-native";
 import { NavigationProp, ParamListBase, useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 import { AppStatusBar } from "../../components/common/AppStatusBar";
 import { FeatureCard } from "../../components/cards/FeatureCard";
 import { NavigationHeader } from "../../components/common/NavigationHeader";
+import { useAppData } from "../../state/AppDataContext";
 import { colors, spacing, typography } from "../../theme/tokens";
 
 const options = [
@@ -41,6 +44,20 @@ const options = [
 
 export function AddBillScreen() {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
+  const { groups } = useAppData();
+
+  const onScanBill = () => {
+    const fallbackGroupId = groups[0]?.id;
+    if (!fallbackGroupId) {
+      Alert.alert("No group available", "Create a group before scanning a bill.");
+      return;
+    }
+
+    (navigation as unknown as { navigate: (screen: string, params?: object) => void }).navigate(
+      "AddExpenseScreen",
+      { groupId: fallbackGroupId, autoOpenScanner: true }
+    );
+  };
 
   return (
     <KeyboardAvoidingView
@@ -59,6 +76,10 @@ export function AddBillScreen() {
             <NavigationHeader title="Create a New Bill Group" />
             <View style={styles.modalContent}>
               <Text style={styles.subtitle}>Join an Existing Bill Group</Text>
+              <Pressable style={styles.scanBillButton} onPress={onScanBill}>
+                <Ionicons name="scan" size={18} color="#000000" />
+                <Text style={styles.scanBillButtonText}>Scan Bill</Text>
+              </Pressable>
               <Text style={styles.sectionTitle}>Bill Group Options</Text>
 
               <View style={styles.grid}>
@@ -140,6 +161,23 @@ const styles = StyleSheet.create({
     fontFamily: typography.semiBold,
     fontSize: 20,
     marginBottom: spacing.md,
+  },
+  scanBillButton: {
+    alignSelf: "flex-start",
+    minHeight: 40,
+    borderRadius: 20,
+    backgroundColor: "#FFFFFF",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: spacing.xs,
+    paddingHorizontal: spacing.md,
+    marginBottom: spacing.sm,
+  },
+  scanBillButtonText: {
+    color: "#000000",
+    fontFamily: typography.semiBold,
+    fontSize: 13,
   },
   grid: {
     flexDirection: "row",

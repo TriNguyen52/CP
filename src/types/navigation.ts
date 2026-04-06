@@ -8,7 +8,11 @@ export type AuthStackParamList = {
 export type HomeStackParamList = {
   HomeScreen: undefined;
   GroupDetailsScreen: { groupId: string };
-  AddExpenseScreen: { groupId: string; prefillExpenseId?: string };
+  AddExpenseScreen: {
+    groupId: string;
+    prefillExpenseId?: string;
+    autoOpenScanner?: boolean;
+  };
   CreateGroupScreen: undefined;
   NotificationsScreen: undefined;
 };

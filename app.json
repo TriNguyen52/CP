@@ -27,7 +27,14 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow CP to access your photos for bill scanning.",
+          "cameraPermission": "Allow CP to use your camera for bill scanning."
+        }
+      ]
     ]
   }
 }

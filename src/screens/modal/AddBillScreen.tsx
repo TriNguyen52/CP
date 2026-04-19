@@ -22,22 +22,26 @@ import { colors, spacing, typography } from "../../theme/tokens";
 const options = [
   {
     title: "Create New Group",
-    description: "Start a fresh bill group and invite members.",
+    description:
+      "Set up a new shared expense space, add friends instantly, and organize all upcoming bills in one place.",
     icon: "add-circle-outline",
   },
   {
     title: "Join Existing",
-    description: "Enter a code to join an existing bill group.",
+    description:
+      "Use an invite code to join an active group, sync your balances, and start tracking shared costs right away.",
     icon: "people-outline",
   },
   {
     title: "Quick Split",
-    description: "Split one receipt in a few taps.",
+    description:
+      "Capture one-off expenses fast by splitting a receipt in just a few taps with automatic per-person totals.",
     icon: "flash-outline",
   },
   {
     title: "Recurring Bills",
-    description: "Set up monthly recurring bill templates.",
+    description:
+      "Create reusable templates for rent, utilities, and subscriptions so repeating charges are added consistently.",
     icon: "repeat-outline",
   },
 ] as const;
@@ -80,7 +84,7 @@ export function AddBillScreen() {
                 <Ionicons name="scan" size={18} color="#000000" />
                 <Text style={styles.scanBillButtonText}>Scan Bill</Text>
               </Pressable>
-              <Text style={styles.sectionTitle}>Bill Group Options</Text>
+              <Text style={styles.sectionTitle}>Available Features</Text>
 
               <View style={styles.grid}>
                 {options.map((option) => (
